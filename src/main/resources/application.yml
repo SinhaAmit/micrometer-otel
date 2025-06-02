@@ -1,0 +1,28 @@
+spring:
+  reactor:
+    contextPropagation: AUTO
+  cloud:
+    gateway:
+      server:
+        webflux:
+          routes:
+            - id: load-testing
+              uri: http://localhost:8081
+              order: 1
+              predicates:
+                - Path=/server-proxy/api/json/**
+              filters:
+                - RewritePath=/server-proxy/(?<segment>.*), /$\{segment}
+management:
+  tracing:
+    enabled: true
+    sampling:
+      probability: 1.0
+    propagation:
+      type: B3_MULTI, W3C
+    baggage:
+      enabled: true
+      remote-fields: username, tenantId, x-request-id
+      correlation:
+        enabled: true
+        fields: username, tenantId, x-request-id

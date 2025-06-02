@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+Dxp logging file configuration that configures logback to be compliant with Dxp logging rules.
+-->
+<configuration>
+
+
+    <conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter"/>
+    <conversionRule conversionWord="wEx"
+                    converterClass="org.springframework.boot.logging.logback.ExtendedWhitespaceThrowableProxyConverter"/>
+    <conversionRule conversionWord="crlf"
+                    converterClass="org.owasp.security.logging.mask.CRLFConverter"/>
+
+    <statusListener class="ch.qos.logback.core.status.NopStatusListener"/>
+
+    <springProperty scope="context" name="appCode" source="application.component.code"/>
+    <springProperty scope="context" name="moduleVersion" source="app-version"/>
+    <springProperty scope="context" name="springAppName" source="spring.application.name"/>
+
+
+    <springProfile name="!test &amp; !private_cloud">
+        <property name="SAMPLE_LOG_PATTERN"
+                  value="%clr(%d{ISO8601}){faint} %clr(%5p) %clr([%-40.40logger{39},%15.15t]){magenta}  %clr(\(%X{operationReference:-},%X{traceId:-},%X{spanId:-},%X{tenantId:-},%X{currentDatasetCode:-},%X{username:-}\)){cyan} : %crlf(%msg) %n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}"/>
+    </springProfile>
+
+    <springProperty name="LOG_LEVEL_FILTER" source="logging.appender.filter"/>
+
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>${LOG_LEVEL_FILTER:-DEBUG}</level>
+        </filter>
+        <encoder>
+            <pattern>${SAMPLE_LOG_PATTERN}</pattern>
+            <charset>utf8</charset>
+        </encoder>
+        <immediateFlush>false</immediateFlush>
+    </appender>
+
+    <logger name="com.example.observation" level="DEBUG"/>
+    <logger name="java" level="WARN"/>
+    <logger name="javax" level="WARN"/>
+    <logger name="jdk" level="WARN"/>
+    <logger name="sun" level="OFF"/>
+    <logger name="com.sun" level="OFF"/>
+    <logger name="kafka" level="WARN"/>
+    <logger name="io.confluent.kafka" level="WARN"/>
+    <logger name="reactor" level="WARN"/>
+    <logger name="okhttp3" level="WARN"/>
+    <logger name="zipkin2" level="WARN"/>
+    <logger name="io.netty" level="WARN"/>
+    <logger name="io.lettuce" level="WARN"/>
+    <logger name="org.jboss" level="WARN"/>
+    <logger name="org.junit" level="WARN"/>
+    <logger name="org.apache" level="WARN"/>
+    <logger name="com.jayway" level="WARN"/>
+    <logger name="org.mongodb" level="WARN"/>
+    <logger name="com.zaxxer.hikari" level="WARN"/>
+    <logger name="org.aspectj" level="WARN"/>
+    <logger name="org.hibernate" level="WARN"/>
+    <logger name="ch.qos.logback" level="WARN"/>
+    <logger name="io.github.openfeign" level="WARN"/>
+    <logger name="io.r2dbc" level="WARN"/>
+    <logger name="liquibase" level="INFO"/>
+    <logger name="org.I0Itec.zkclient" level="WARN"/>
+    <logger name="de.flapdoodle.embed" level="WARN"/>
+    <logger name="org.synchronoss.cloud" level="WARN"/>
+    <logger name="org.hibernate.validator" level="WARN"/>
+    <logger name="org.liquibase" level="WARN"/>
+    <logger name="org.postgresql" level="WARN"/>
+    <logger name="org.springframework" level="WARN"/>
+    <logger name="org.springframework.boot" level="WARN"/>
+    <logger name="org.springframework.data" level="WARN"/>
+    <logger name="org.springframework.cache" level="WARN"/>
+    <logger name="org.springframework.security" level="WARN"/>
+    <logger name="org.springframework.web" level="WARN"/>
+    <logger name="org.javamoney.moneta" level="WARN"/>
+    <logger name="org.testcontainers" level="WARN"/>
+    <logger name="unknown.jul.logger" level="INFO"/>
+    <logger name="com.github.dockerjava" level="INFO"/>
+    <logger name="_org.springframework.web.reactive.HandlerMapping" level="WARN"/>
+    <logger name="org.springframework.data.convert.CustomConversions" level="ERROR"/>
+    <logger name="org.apache.kafka.clients.consumer.ConsumerConfig" level="ERROR"/>
+    <logger name="org.apache.kafka.clients.producer.ProducerConfig" level="ERROR"/>
+    <logger name="org.springframework.boot.web.embedded.netty.NettyWebServer" level="INFO"/>
+    <logger name="org.springframework.cloud.config.client.ConfigServicePropertySourceLocator" level="INFO"/>
+    <logger name="com.soprabanking.dxp.commons.security.SecurityRequestMappingHandler" level="WARN"/>
+    <logger name="org.springframework.boot.autoconfigure.web.reactive.WebFluxRegistrations" level="WARN"/>
+    <logger name="com.soprabanking.dxp.commons.api.DxpJacksonJsonEncoder" level="WARN"/>
+    <logger name="io.micrometer.tracing.brave.bridge" level="WARN"/>
+    <logger name="brave" level="WARN"/>
+
+    <root level="TRACE">
+        <appender-ref ref="console"/>
+    </root>
+
+</configuration>
