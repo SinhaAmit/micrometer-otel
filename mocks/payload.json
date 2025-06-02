@@ -1,0 +1,37 @@
+{
+  "request": {
+    "method": "GET",
+    "urlPathPattern": "/api/json/.*"
+  },
+  "response": {
+    "status": 200,
+    "jsonBody": {
+      "user": {
+        "id": 12345,
+        "username": "amit_sinha",
+        "email": "amit@example.com",
+        "profile": {
+          "firstName": "Amit",
+          "lastName": "Sinha",
+          "age": 34,
+          "location": {
+            "city": "Noida",
+            "country": "India"
+          }
+        },
+        "preferences": {
+          "language": "en",
+          "theme": "dark",
+          "notifications": true
+        },
+        "roles": [
+          "admin",
+          "editor"
+        ]
+      }
+    },
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  }
+}

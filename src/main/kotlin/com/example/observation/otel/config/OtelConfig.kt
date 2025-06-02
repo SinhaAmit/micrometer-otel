@@ -17,8 +17,9 @@ class OtelConfig {
         tracer: Tracer,
         registry: ObservationRegistry,
     ): OtelWebFilter {
-        //ContextRegistry.getInstance().registerThreadLocalAccessor(ObservationAwareBaggageThreadLocalAccessor(registry, tracer))
-        //ContextRegistry.getInstance().registerThreadLocalAccessor(ObservationAwareSpanThreadLocalAccessor(tracer))
+        ContextRegistry.getInstance()
+            .registerThreadLocalAccessor(ObservationAwareBaggageThreadLocalAccessor(registry, tracer))
+        ContextRegistry.getInstance().registerThreadLocalAccessor(ObservationAwareSpanThreadLocalAccessor(tracer))
         return OtelWebFilter(tracer)
     }
 }
